@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../publicTools/animation.js"></script>
+
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            font: 14px/1.5 'Microsoft YaHei',arial,tahoma,\5b8b\4f53,sans-serif;
+        }
+        .part1 {
+            width: 100%;
+            height: 50px;
+            background-color: #222;
+        }
+        .part2 {
+            width: 100%;
+            height: 1100px;
+            background-color: #eee;
+        }
+        .book {
+            width: 50%;
+            position: absolute;
+            left: 5%;
+            top: 1100px;
+        }
+        .bookText {
+            position: absolute;
+            top: 350px;
+            left: 60%;
+            width: 30%;
+            font-size: 50px;
+        }
+        .part3 {
+            width: 100%;
+        }
+        .scenery {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="part1"></div>
+    <div class="part2">
+        <img class="book" src="bookimg.jpg">
+        <div class="bookText">
+            要是有所得罪请原谅，本是出自一番好意，
+            只是想显点粗浅技艺，那才是我们的初衷。<br/><br/>
+            <span style="float: right;">
+                ——
+                <span style="font-family: 宋体; text-shadow: 3px -3px black, 2px -2px white;">最后的卡德加</span>
+            </span>
+        </div>
+    </div>
+    <div class="part3">
+        <img class="scenery" src="sceneryImg.gif">
+    </div>
+</body>
+
+<script type="text/javascript">
+
+    init()
+    function init () {
+        let bookimg = document.getElementsByClassName('book')[0]
+        let target = ['offsetTop', 'top', 80]
+        moveDom(bookimg, target)
+    }
+
+</script>
+
+</html>
