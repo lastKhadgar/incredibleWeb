@@ -13,6 +13,10 @@
             margin: 0;
             font: 14px/1.5 'Microsoft YaHei',arial,tahoma,\5b8b\4f53,sans-serif;
         }
+        .authorName {
+            font-family: 宋体;
+            text-shadow: 3px -3px black, 2px -2px white;
+        }
         .part1 {
             width: 100%;
             height: 50px;
@@ -23,13 +27,13 @@
             height: 1100px;
             background-color: #eee;
         }
-        .book {
+        .part2 .book {
             width: 50%;
             position: absolute;
             left: 5%;
             top: 1100px;
         }
-        .bookText {
+        .part2 .bookText {
             position: absolute;
             top: 350px;
             left: 60%;
@@ -38,9 +42,38 @@
         }
         .part3 {
             width: 100%;
+            height: 5000px;
         }
-        .scenery {
+        .part3 .scenery {
             width: 100%;
+            position: relative;
+            z-index: 9;
+        }
+        .part3 .scenery .sceneryImg {
+            width: 100%;
+            height: 1280px;
+            filter: blur(0px) brightness(100%);
+            -webkit-filter: blur(0px) brightness(100%);
+        }
+        .part3 .scenery .sceneryText {
+            width: 60%;
+            position: absolute;
+            top: 1700px;
+            left: 20%;
+            height: 100%;
+            z-index: 10;
+            font-size: 60px;
+            color: #eee;
+        }
+        .part3 .scenery .sceneryImg2 {
+            width: 100%;
+            height: 1280px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 11;
+            clip-path: circle(0% at 50% 50%);
+            -webkit-clip-path: circle(0% at 50% 50%);
         }
     </style>
 </head>
@@ -54,22 +87,98 @@
             只是想显点粗浅技艺，那才是我们的初衷。<br/><br/>
             <span style="float: right;">
                 ——
-                <span style="font-family: 宋体; text-shadow: 3px -3px black, 2px -2px white;">最后的卡德加</span>
+                <span class="authorName">最后的卡德加</span>
             </span>
         </div>
     </div>
     <div class="part3">
-        <img class="scenery" src="sceneryImg.gif">
+        <div class="scenery">
+            <img class="sceneryImg" src="sceneryImg.gif">
+            <div class="sceneryText">
+                我让你的脚玷污我的嘴唇，让你的肖<br/>
+                像玷污我的眼睛，让你的每一部分玷<br/>
+                污我的心，等候着你的答复。你的最<br/>
+                忠实的……<br/><br/>
+                <span style="float: right;">
+                    ——
+                    <span class="authorName">最后的卡德加</span>
+                </span>
+            </div>
+            <img class="sceneryImg2" src="sceneryImg2.jpg">
+        </div>
     </div>
 </body>
 
 <script type="text/javascript">
 
+    const topPosition = 1300
+
+    let part1 = document.getElementsByClassName('book')[0]
+    let part2 = document.getElementsByClassName('scenery')[0]
+    let part2_1 = document.getElementsByClassName('sceneryImg')[0]
+    let part2_2 = document.getElementsByClassName('sceneryText')[0]
+    let part2_3 = document.getElementsByClassName('sceneryImg2')[0]
     init()
     function init () {
-        let bookimg = document.getElementsByClassName('book')[0]
         let target = ['offsetTop', 'top', 80]
-        moveDom(bookimg, target)
+        moveDom(part1, target)
+        scrollListener(part2, [topPosition, 4500], part2BgFixed)
+        scrollListener(part2_1, [topPosition, 2800], part2Img)
+        scrollListener(part2_2, [topPosition, 3500], part2Text)
+        scrollListener(part2_3, [3500, 4500], part2Img2)
+    }
+
+    // 第二部分背景固定
+    function part2BgFixed (type, scrollTop) {
+        if (type === 1) {
+            part2.style.position = 'relative'
+            part2.style.top = '0px'
+        } else if (type === 2) {
+            part2.style.position = 'fixed'
+            part2.style.top = '-150px'
+        } else {
+            part2.style.position = 'relative'
+            part2.style.top = 4500 - topPosition + 'px'
+        }
+    }
+
+    // 第二部分图片滤镜
+    function part2Img (type, scrollTop) {
+        if (type === 1) {
+            part2_1.style.Filter = 'blur(0px) brightness(100%)'
+            part2_1.style.WebkitFilter = 'blur(0px) brightness(100%)'
+        } else if (type === 2) {
+            part2_1.style.Filter = 'blur(' + (scrollTop - topPosition) / 100 + 'px) brightness(' + (100 - (scrollTop - topPosition) / 18) + '%)'
+            part2_1.style.WebkitFilter = 'blur(' + (scrollTop - topPosition) / 100 + 'px) brightness(' + (100 - (scrollTop - topPosition) / 18) + '%)'
+        } else {
+            part2_1.style.Filter = 'blur(0px) brightness(17%)'
+            part2_1.style.WebkitFilter = 'blur(15px) brightness(17%)'
+        }
+    }
+
+    // 第二部分文字滚动
+    function part2Text (type, scrollTop) {
+        if (type === 1) {
+            part2_2.style.top = '1700px'
+        } else if (type === 2) {
+            part2_2.style.top = 1700 - (scrollTop - topPosition) + 'px'
+        } else {
+            part2_2.style.top = '-500px'
+        }
+    }
+
+    // 第二部分图片裁剪
+    function part2Img2 (type, scrollTop) {
+        if (type === 1) {
+            part2_3.style.ClipPath = 'circle(0% at 50% 50%)'
+            part2_3.style.WebkitClipPath = 'circle(0% at 50% 50%)'
+        } else if (type === 2) {
+            part2_3.style.ClipPath = 'circle(' + (scrollTop - 3500) / 100 * 7 + '% at 50% 50%)'
+            part2_3.style.WebkitClipPath = 'circle(' + (scrollTop - 3500) / 100 * 7 + '% at 50% 50%)'
+        } else {
+            part2_3.style.ClipPath = 'blur(0px) brightness(17%)'
+            part2_3.style.WebkitClipPath = 'blur(15px) brightness(17%)'
+        }
     }
 
 </script>
