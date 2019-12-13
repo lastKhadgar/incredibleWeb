@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../publicTools/animation.js"></script>
+
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+            font: 14px/1.5 'Microsoft YaHei',arial,tahoma,\5b8b\4f53,sans-serif;
+        }
+        .title {
+            position: relative;
+            width: 100%;
+            font-size: 40px;
+            text-align: center;
+            line-height: 100px;
+        }
+        .title .mark {
+            display: inline-block;
+            position: absolute;
+            z-index: 99;
+            left: 50px;
+            top: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background-color: #ee3834;
+            line-height: 50px;
+            text-align: center;
+            color: #FFE1DF;
+        }
+        .floatDiv {
+            position: relative;
+            border: #222222 solid 1px;
+            border-radius: 5px;
+            background-color: #FFE1DF;
+            text-indent: 2em;
+            font-size: 28px;
+            padding: 30px;
+        }
+        .showBox {
+            width: 100%;
+            overflow: hidden;
+            height: 850px;
+        }
+        .showBox .wholeBox {
+            width: 500%;
+            height: 700px;
+            position: relative;
+            left: 0px;
+        }
+        .showBox .boxFooter {
+            width: 100%;
+            height: 150px;
+        }
+        .showBox .wholeBox .box {
+            display: inline-block;
+            vertical-align: top;
+            width: 19.9%;
+            height: 700px;
+        }
+        .showBox .wholeBox .box .textBox {
+            width: 700px;
+            height: 450px;
+            font-size: 20px;
+            margin: 100px 50px 100px 200px;
+            border-radius: 8px;
+            background-color: #FFE1DF;
+        }
+        .showBox .wholeBox .box .btn {
+            display: inline-block;
+            position: relative;
+            top: -300px;
+            width: 140px;
+            height: 40px;
+            border: #222222 solid 2px;
+            border-radius: 20px;
+            line-height: 40px;
+            font-size: 20px;
+            text-indent: 20px;
+            cursor: pointer;
+        }
+        .showBox .wholeBox .box .btn:hover {
+            background-color: #dddddd;
+        }
+        .showBox .wholeBox .box .btn:active {
+            background-color: #999999;
+        }
+        .showBox .wholeBox .box .result {
+            display: inline-block;
+            vertical-align: top;
+            padding: 20px;
+            width: 560px;
+            height: 410px;
+            font-size: 20px;
+            margin: 100px 50px;
+            border-radius: 8px;
+            border: #222222 dashed 1px;
+            background-color: #c3fcff;
+        }
+        .boxFooter .btn {
+            display: inline-block;
+            width: 130px;
+            height: 50px;
+            border: #222222 solid 1px;
+            border-radius: 25px;
+            line-height: 50px;
+            font-size: 25px;
+            text-indent: 25px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+<div class="title">一、概述</div>
+<div class="floatDiv" style="width: 700px; left: -1000px; top: 30px">
+    JavaScript曾是“世界上最被误解的语言”，因为它担负太多的特性，包括糟糕的交互和失败的设计，但随着Ajax的到来，JavaScript“从最受误解的编程语言演变为最流行的语言”
+</div>
+<div class="floatDiv" style="width: 1000px; left: 2000px; top: 60px">
+    作者在本书中剥开了JavaScript沾污的外衣，抽离出一个具有更好可靠性、可读性和可维护性的JavaScript子集，让你看到一门优雅的、轻量级的和非常富有表现力的语言
+</div>
+<div class="floatDiv" style="width: 1000px; left: -1200px; top: 90px">
+    这是一本关于JavaScript编程语言的书。它的读者是那些因为偶然事件或好奇心驱使而首次冒险进入JavaScript世界的程序员。它也是为那些有着JavaScript入门经验但准备更深入了解这门语言的程序员准备的。JavaScript是一门强大得令人惊讶的语言。它有时会不按常理出牌，但是作为一门轻量级的语言，它是易于掌握的。
+</div>
+<div class="floatDiv" style="width: 800px; left: 2000px; top: 120px">
+    JavaScript建立在一些非常优秀的想法和少数非常糟糕的想法之上。
+    那些优秀的想法包括函数、弱类型、动态对象和富有表现力的对象字面量表示法。那些糟糕的想法包括基于全局变量的编程模型。
+</div>
+<div class="title" style="margin-top: 160px">
+    神奇的事件（毒瘤和糟粕）
+    <div class="mark" onclick="taggleL(this)">秘</div>
+</div>
+<div class="showBox">
+    <div class="wholeBox">
+        <div class="box">
+            <textarea class="textBox">
+                function test() {
+                    var list = [1, 2, 3]
+                    for (var i = 0; i < list.length; i++) {
+                        var aaa = 'bbb'
+                    }
+                    return aaa
+                }
+            </textarea>
+            <div class="btn" onclick="run(this)">在线运行 →</div>
+            <div class="result"></div>
+        </div>
+        <div class="box">
+            <textarea class="textBox">
+                function test() {
+                    var result = []
+                    result[0] = typeof 'aaaaa'
+                    result[1] = typeof 123
+                    result[2] = typeof { a: 'a' }
+                    result[3] = typeof [1, 2, 3]
+                    result[4] = typeof null
+                    result[5] = typeof NaN
+                    return result
+                }
+            </textarea>
+            <div class="btn" onclick="run(this)">在线运行 →</div>
+            <div class="result"></div>
+        </div>
+        <div class="box">
+            <textarea class="textBox">
+                function test() {
+                    var result = []
+                    result[0] = parseInt('666')
+                    result[1] = parseInt('666踩踩踩')
+                    result[2] = parseInt('010')
+                    result[3] = 0.1 + 0.2
+                    return result
+                }
+            </textarea>
+            <div class="btn" onclick="run(this)">在线运行 →</div>
+            <div class="result"></div>
+        </div>
+        <div class="box">
+            <textarea class="textBox">
+                function test() {
+                    var result = []
+                    result[0] = '' == '0'
+                    result[1] = 0 == ''
+                    result[2] = 0 == '0'
+
+                    result[3] = false == 'false'
+                    result[4] = false == '0'
+
+                    result[5] = false == undefined
+                    result[6] = false == null
+                    result[7] = null == undefined
+
+                    result[8] = ' \t\r\n ' == 0
+                    return result
+                }
+            </textarea>
+            <div class="btn" onclick="run(this)">在线运行 →</div>
+            <div class="result"></div>
+        </div>
+        <div class="box">
+            <textarea class="textBox">
+        function test() {
+            var nodes = document.getElementsByClassName('testBtn')
+            for (i = 0; i < nodes.length; i += 1) {
+                nodes[i].onclick = function (e) {
+                    alert(i);
+                };
+            }
+            return null
+        }
+            </textarea>
+            <div class="btn" onclick="run(this)">在线运行 →</div>
+            <div class="result">
+                <button class="testBtn">000</button>
+                <button class="testBtn">111</button>
+                <button class="testBtn">222</button>
+            </div>
+        </div>
+    </div>
+    <div class="boxFooter">
+        <div class="btn" style="margin-left: 45%; background-color: #FFE1DF" onclick="lastPage()">上一页</div>
+        <div class="btn" style="margin-left: 5%; background-color: #c3fcff" onclick="nextPage()">下一页</div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    init()
+    function init() {
+        moveDom(document.getElementsByClassName('floatDiv')[0], ['offsetLeft', 'left', 100])
+        setTimeout(function () {
+            moveDom(document.getElementsByClassName('floatDiv')[1], ['offsetLeft', 'left', 750])
+        }, 1000)
+        setTimeout(function () {
+            moveDom(document.getElementsByClassName('floatDiv')[2], ['offsetLeft', 'left', 100])
+        }, 2000)
+        setTimeout(function () {
+            moveDom(document.getElementsByClassName('floatDiv')[3], ['offsetLeft', 'left', 950])
+        }, 3000)
+    }
+
+    var page = 1
+    var moving = false
+    function nextPage () {
+        if (!moving && page < 5) {
+            page++
+            moving = true
+            moveDom(document.getElementsByClassName('wholeBox')[0], ['offsetLeft', 'left', -1893 * (page - 1)], function () {
+                moving = false
+                if (document.getElementsByClassName('mark')[0].offsetWidth === 800) {
+                    document.getElementsByClassName('mark')[0].innerHTML = text[page - 1]
+                }
+            })
+        }
+    }
+    function lastPage () {
+        if (!moving && page > 1) {
+            page--
+            moving = true
+            moveDom(document.getElementsByClassName('wholeBox')[0], ['offsetLeft', 'left', -1893 * (page - 1)], function () {
+                moving = false
+                if (document.getElementsByClassName('mark')[0].offsetWidth === 800) {
+                    document.getElementsByClassName('mark')[0].innerHTML = text[page - 1]
+                }
+            })
+        }
+    }
+
+    function run (dom) {
+        eval(dom.previousElementSibling.value)
+        var result = test()
+        if (result && result !== '') {
+            dom.nextElementSibling.innerText = result
+        }
+    }
+
+    function taggleL (dom) {
+        if (dom.offsetWidth === 50) {
+            dom.innerText = ''
+            moveDom(dom, ['offsetHeight', 'height', 500])
+            moveDom(dom, ['offsetWidth', 'width', 800], function () {
+                dom.style.fontSize = '22px'
+                dom.style.lineHeight = '35px'
+                dom.style.textAlign = 'left'
+                dom.innerHTML = text[page - 1]
+            })
+        } else if (dom.offsetWidth === 800) {
+            dom.innerText = ''
+            moveDom(dom, ['offsetHeight', 'height', 50])
+            moveDom(dom, ['offsetWidth', 'width', 50], function () {
+                dom.style.fontSize = '40px'
+                dom.style.lineHeight = '50px'
+                dom.style.textAlign = 'center'
+                dom.innerText = '秘'
+            })
+        }
+    }
+
+    var text = [
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大多数类C语言语法的语言都拥有块级作用域。在一个代码块中（括在一对花括号中的一组语句）定义的所有变量在代码块的外' +
+        '部是不可见的。定义在代码块中的变量在代码块执行结束后会被释放掉。这是件好事。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;糟糕的是，尽管JavaScript的代码块语法貌似支持块级作用域，' +
+        '但实际上并不支持。js支持的是函数作用域。</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JavaScript没有真正的数组。这也不全是坏事。JavaScript的数组确实非常容易使用。你不必给它们设置维度，而且它们永远不' +
+        '会产生越界错误。但它们的性能相比真正的数组可能相当糟糕。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typeof null 返回\'object\'而不是\'null\'，这简直太糟糕了。typeof不能辨别出null' +
+        '与对象，更简单也更好的检测null的方式是：my_value === null<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NaN表示的不是一个数字，尽管 typeof NaN 返回的是 number 。在试图把非数字形式的' +
+        '字符串转换为数字时产生NaN，JavaScript提供了一个isNaN函数，可以辨别数字与NaN</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parseInt是一个把字符串转换为整数的函数。它在遇到非数字时会停止解析，所以parseInt("16")与parseInt("16踩踩踩")产生' +
+        '相同的结果。如果该函数会提醒我们出现了额外文本就好了，但它没有那么做。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;曾经当字符串第1个字符是0，那么该字符串会基于八进制而不是十进制来' +
+        '求值，parseInt("010") 会得到 8 的结果，不过后来更新过程中改变了。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二进制的浮点数不能正确地处理十进制的小数，因此0.1+0.2不等于0.3。这是' +
+        'JavaScript中最经常被报告的bug，并且它是遵循二进制浮点数算术标准。幸运的是，浮点数中的整数运算是精确的，所以小数表现出来的错误可以通过指定精度来避免。</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JavaScript有两组相等运算符：===和!==，以及它们邪恶的孪生兄弟==和!=。邪恶的孪生兄弟只有在两个运算数类型一致时才会' +
+        '做出正确的判断，如果两个运算数是不同的类型，它们试图去强制转换值的类型。转换的规则复杂且难以记忆。下面是一些有趣的例子<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我的建议是永远不' +
+        '要使用那对邪恶的孪生兄弟。相反，请始终使用===和!==。</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test函数的本意是想传递给每个事件处理器一个唯一值（i）。但它未能达到目的，因为事件处理器函数绑定了变量i本身，而不' +
+        '是函数在构造时的变量i的值。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;避免在循环中创建函数，它可能只会带来无谓的计算，还会引起混淆，正如上面那个糟糕的例子。我们可以先在循环之外' +
+        '创建一个辅助函数，让这个辅助函数再返回一个绑定了当前i值的函数，这样就不会导致混淆了。</div>'
+    ]
+
+</script>
+
+</html>

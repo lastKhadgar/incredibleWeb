@@ -35,14 +35,14 @@
         }
         .part2 .bookText {
             position: absolute;
-            top: 350px;
+            top: 200px;
             left: 60%;
             width: 30%;
             font-size: 50px;
         }
         .part3 {
             width: 100%;
-            height: 5000px;
+            height: 4500px;
         }
         .part3 .scenery {
             width: 100%;
@@ -75,6 +75,36 @@
             clip-path: circle(0% at 50% 50%);
             -webkit-clip-path: circle(0% at 50% 50%);
         }
+        .part4 {
+            width: 100%;
+            height: 900px;
+        }
+        .part4 .title {
+            width: 100%;
+            height: 100px;
+        }
+        .part4 .list {
+            width: 1394px;
+            margin: 0px auto;
+        }
+        .part4 .list .nameTab {
+            display: inline-block;
+            width: 140px;
+            text-decoration: none;
+            height: 600px;
+            margin-left: 50px;
+            border: #222222 solid 1px;
+            border-radius: 8px;
+            transform:scale(0.7);
+            -webkit-transform:scale(0.7);
+            font-size: 62px;
+            vertical-align: top;
+            cursor: pointer;
+        }
+        .part4 .list .nameTab div {
+            width: 62px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 
@@ -83,8 +113,8 @@
     <div class="part2">
         <img class="book" src="bookimg.jpg">
         <div class="bookText">
-            要是有所得罪请原谅，本是出自一番好意，
-            只是想显点粗浅技艺，那才是我们的初衷。<br/><br/>
+            每一个热爱技术的开发人员都希望自己有一天成为某个领域的大师,
+            “取其精华，去其糟粕”本就是前人告诉我们的学习态度与方法<br/><br/>
             <span style="float: right;">
                 ——
                 <span class="authorName">最后的卡德加</span>
@@ -95,10 +125,10 @@
         <div class="scenery">
             <img class="sceneryImg" src="sceneryImg.gif">
             <div class="sceneryText">
-                我让你的脚玷污我的嘴唇，让你的肖<br/>
-                像玷污我的眼睛，让你的每一部分玷<br/>
-                污我的心，等候着你的答复。你的最<br/>
-                忠实的……<br/><br/>
+                要是有所得罪请原谅，<br/>
+                本是出自一番好意，<br/>
+                只是想显点粗浅技艺，<br/>
+                那才是我们的初衷。<br/><br/>
                 <span style="float: right;">
                     ——
                     <span class="authorName">最后的卡德加</span>
@@ -107,25 +137,39 @@
             <img class="sceneryImg2" src="sceneryImg2.jpg">
         </div>
     </div>
+    <div class="part4">
+        <div class="title"></div>
+        <div class="list">
+            <a class="nameTab" href="./content1.html" style="background-image: linear-gradient(#FFFFFF, #FFFF66); color: #4B0771"><div style="margin-top: 100px">一概述</div></a>
+            <div class="nameTab" style="background-image: linear-gradient(#FFFF66, #CCFF00); color: #663333"><div style="margin-top: 100px">二对象</div></div>
+            <div class="nameTab" style="background-image: linear-gradient(#CCFF00, #33FF00); color: #85442A"><div style="margin-top: 100px">三数组</div></div>
+            <div class="nameTab" style="background-image: linear-gradient(#33FF00, #6600CC); color: #CC3D49"><div style="margin-top: 60px">四函数一</div></div>
+            <div class="nameTab" style="background-image: linear-gradient(#6600CC, #CC0033); color: #DFF07B"><div style="margin-top: 30px">五高级函数</div></div>
+            <div class="nameTab" style="background-image: linear-gradient(#CC0033, #663333); color: #FFE1DF"><div>六正则表达式</div></div>
+            <div class="nameTab" style="background-image: linear-gradient(#663333, #000000); color: #FFFFFF"><div style="margin-top: 100px">七总结</div></div>
+        </div>
+    </div>
 </body>
 
 <script type="text/javascript">
 
     const topPosition = 1300
 
-    let part1 = document.getElementsByClassName('book')[0]
-    let part2 = document.getElementsByClassName('scenery')[0]
-    let part2_1 = document.getElementsByClassName('sceneryImg')[0]
-    let part2_2 = document.getElementsByClassName('sceneryText')[0]
-    let part2_3 = document.getElementsByClassName('sceneryImg2')[0]
+    var part1 = document.getElementsByClassName('book')[0]
+    var part2 = document.getElementsByClassName('scenery')[0]
+    var part2_1 = document.getElementsByClassName('sceneryImg')[0]
+    var part2_2 = document.getElementsByClassName('sceneryText')[0]
+    var part2_3 = document.getElementsByClassName('sceneryImg2')[0]
+    var part4 = document.getElementsByClassName('nameTab')
     init()
     function init () {
-        let target = ['offsetTop', 'top', 80]
+        var target = ['offsetTop', 'top', 80]
         moveDom(part1, target)
         scrollListener(part2, [topPosition, 4500], part2BgFixed)
         scrollListener(part2_1, [topPosition, 2800], part2Img)
         scrollListener(part2_2, [topPosition, 3500], part2Text)
         scrollListener(part2_3, [3500, 4500], part2Img2)
+        part4Mouse()
     }
 
     // 第二部分背景固定
@@ -173,11 +217,23 @@
             part2_3.style.ClipPath = 'circle(0% at 50% 50%)'
             part2_3.style.WebkitClipPath = 'circle(0% at 50% 50%)'
         } else if (type === 2) {
-            part2_3.style.ClipPath = 'circle(' + (scrollTop - 3500) / 100 * 7 + '% at 50% 50%)'
-            part2_3.style.WebkitClipPath = 'circle(' + (scrollTop - 3500) / 100 * 7 + '% at 50% 50%)'
+            part2_3.style.ClipPath = 'circle(' + (scrollTop - 3500) / 100 * 7.5 + '% at 50% 50%)'
+            part2_3.style.WebkitClipPath = 'circle(' + (scrollTop - 3500) / 100 * 7.5 + '% at 50% 50%)'
         } else {
-            part2_3.style.ClipPath = 'blur(0px) brightness(17%)'
-            part2_3.style.WebkitClipPath = 'blur(15px) brightness(17%)'
+            part2_3.style.ClipPath = 'circle(75% at 50% 50%)'
+            part2_3.style.WebkitClipPath = 'circle(75% at 50% 50%)'
+        }
+    }
+
+    // 第四部分监听放大
+    function part4Mouse () {
+        var trans = function (i) {
+            return function () {
+                scaleDom(part4, i)
+            }
+        }
+        for (var i = 0; i < part4.length; i++) {
+            part4[i].onmouseover = trans(i)
         }
     }
 
