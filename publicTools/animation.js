@@ -2,7 +2,7 @@ function moveDom (dom, target, callback) {
     var attrTarget = target[2]
     var distance = Math.abs(dom[target[0]] - attrTarget)
     var interval = setInterval(() => {
-        if (Math.abs(dom[target[0]] - attrTarget) > distance / 100) {
+        if (Math.abs(dom[target[0]] - attrTarget) > distance / 200) {
             if (dom[target[0]] - attrTarget > 100 || dom[target[0]] - attrTarget < - 100) { // 处理由于浏览器缩放导致1像素分辨不清问题
                 dom.style[target[1]] = dom[target[0]] -
                     (dom[target[0]] - attrTarget > 0 ? Math.ceil((dom[target[0]] - attrTarget) / 50) : Math.floor((dom[target[0]] - attrTarget) / 50)) + 'px'

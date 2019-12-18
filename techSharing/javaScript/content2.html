@@ -34,13 +34,13 @@
             background-color: #ee3834;
             line-height: 50px;
             text-align: center;
-            color: #FFE1DF;
+            color: #FFF5B9;
         }
         .floatDiv {
             position: relative;
             border: #222222 solid 1px;
             border-radius: 5px;
-            background-color: #FFE1DF;
+            background-color: #FFF5B9;
             text-indent: 2em;
             font-size: 28px;
             padding: 30px;
@@ -72,7 +72,7 @@
             font-size: 20px;
             margin: 100px 50px 100px 200px;
             border-radius: 8px;
-            background-color: #FFE1DF;
+            background-color: #FFF5B9;
         }
         .showBox .wholeBox .box .btn {
             display: inline-block;
@@ -120,22 +120,18 @@
 </head>
 
 <body>
-<div class="title">一、概述</div>
-<div class="floatDiv" style="width: 700px; left: -1000px; top: 30px">
-    JavaScript曾是“世界上最被误解的语言”，因为它担负太多的特性，包括糟糕的交互和失败的设计，但随着Ajax的到来，JavaScript“从最受误解的编程语言演变为最流行的语言”
+<div class="title">二、对象</div>
+<div class="floatDiv" style="width: 1200px; left: -1400px; top: 30px">
+    1、对象是属性的容器，其中每个属性都拥有名字和值。属性的名字可以是包括空字符串在内的任意字符串。属性值可以是除undefined值之外的任何值。
 </div>
-<div class="floatDiv" style="width: 1000px; left: 2000px; top: 60px">
-    作者在本书中剥开了JavaScript沾污的外衣，抽离出一个具有更好可靠性、可读性和可维护性的JavaScript子集，让你看到一门优雅的、轻量级的和非常富有表现力的语言
+<div class="floatDiv" style="width: 1400px; left: -1600px; top: 60px">
+    2、JavaScript里的对象是无类型（class-free）的。它对新属性的名字和属性的值没有限制。对象适合用于汇集和管理数据。对象可以包含其他对象，所以它们可以容易地表示成树状或图形结构。
 </div>
 <div class="floatDiv" style="width: 1000px; left: -1200px; top: 90px">
-    这是一本关于JavaScript编程语言的书。它的读者是那些因为偶然事件或好奇心驱使而首次冒险进入JavaScript世界的程序员。它也是为那些有着JavaScript入门经验但准备更深入了解这门语言的程序员准备的。JavaScript是一门强大得令人惊讶的语言。它有时会不按常理出牌，但是作为一门轻量级的语言，它是易于掌握的。
-</div>
-<div class="floatDiv" style="width: 800px; left: 2000px; top: 120px">
-    JavaScript建立在一些非常优秀的想法和少数非常糟糕的想法之上。
-    那些优秀的想法包括函数、弱类型、动态对象和富有表现力的对象字面量表示法。那些糟糕的想法包括基于全局变量的编程模型。
+    3、对象通过引用来传递，它们不会通过等号复制
 </div>
 <div class="title" style="margin-top: 160px">
-    神奇的事件（毒瘤和糟粕）
+    经典的例子
     <div class="mark" onclick="taggleL(this)">秘</div>
 </div>
 <div class="showBox">
@@ -143,11 +139,8 @@
         <div class="box">
             <textarea class="textBox">
                 function test() {
-                    var list = [1, 2, 3]
-                    for (var i = 0; i < list.length; i++) {
-                        var aaa = 'bbb'
-                    }
-                    return aaa
+                    var obj = { first-name: 'hehe' }
+                    return obj.first-name
                 }
             </textarea>
             <div class="btn" onclick="run(this)">在线运行 →</div>
@@ -157,12 +150,19 @@
             <textarea class="textBox">
                 function test() {
                     var result = []
-                    result[0] = typeof 'aaaaa'
-                    result[1] = typeof 123
-                    result[2] = typeof { a: 'a' }
-                    result[3] = typeof [1, 2, 3]
-                    result[4] = typeof null
-                    result[5] = typeof NaN
+                    Object.prototype.test = '111'
+                    var obj = { a: 'aa', b: 'bb' }
+                    result.push(obj.test)
+
+                    obj.test = '222'
+                    result.push(obj.test)
+
+                    delete obj.test
+                    result.push(obj.test)
+
+                    delete obj.test
+                    result.push(obj.test)
+
                     return result
                 }
             </textarea>
@@ -173,10 +173,20 @@
             <textarea class="textBox">
                 function test() {
                     var result = []
-                    result[0] = parseInt('666')
-                    result[1] = parseInt('666踩踩踩')
-                    result[2] = parseInt('010')
-                    result[3] = 0.1 + 0.2
+                    var obj = { a: 'aaa' }
+
+                    var obj2 = Object.create(obj)
+                    result.push(obj2.a)
+
+                    obj2.a = 'aaa1'
+                    result.push(obj.a)
+
+                    obj.b = 'bbb'
+                    result.push(obj2.b)
+
+                    obj.a = 'aaa2'
+                    result.push(obj2.a)
+
                     return result
                 }
             </textarea>
@@ -187,18 +197,23 @@
             <textarea class="textBox">
                 function test() {
                     var result = []
-                    result[0] = '' == '0'
-                    result[1] = 0 == ''
-                    result[2] = 0 == '0'
+                    var obj = { a: 'aaa' }
+                    var obj2 = { a: { a: 'aaa' } }
 
-                    result[3] = false == 'false'
-                    result[4] = false == '0'
+                    var copy1 = obj
+                    var copy2 = { ...obj }
+                    var copy3 = Object.assign({}, obj)
+                    var copy4 = JSON.parse(JSON.stringify(obj))
 
-                    result[5] = false == undefined
-                    result[6] = false == null
-                    result[7] = null == undefined
+                    var copy5 = obj2
+                    var copy6 = { ...obj2 }
+                    var copy7 = Object.assign({}, obj2)
+                    var copy8 = JSON.parse(JSON.stringify(obj2))
 
-                    result[8] = ' \t\r\n ' == 0
+                    obj.a = 'aaa1'
+                    obj2.a.a = 'aaa1'
+                    result = [ copy1.a, copy2.a, copy3.a, copy4.a, copy5.a.a, copy6.a.a, copy7.a.a, copy8.a.a ]
+
                     return result
                 }
             </textarea>
@@ -208,25 +223,22 @@
         <div class="box">
             <textarea class="textBox">
         function test() {
-            var nodes = document.getElementsByClassName('testBtn')
-            for (i = 0; i < nodes.length; i += 1) {
-                nodes[i].onclick = function (e) {
-                    alert(i);
-                };
+            var add = function (obj) {
+                var a = obj.a || 2
+                var b = obj.b || 3
+                return a + b
             }
-            return null
+            var a = { a: 4 }
+            var result = add(a)
+            return result
         }
             </textarea>
             <div class="btn" onclick="run(this)">在线运行 →</div>
-            <div class="result">
-                <button class="testBtn">000</button>
-                <button class="testBtn">111</button>
-                <button class="testBtn">222</button>
-            </div>
+            <div class="result"></div>
         </div>
     </div>
     <div class="boxFooter">
-        <div class="btn" style="margin-left: 45%; background-color: #FFE1DF" onclick="lastPage()">上一页</div>
+        <div class="btn" style="margin-left: 45%; background-color: #FFF5B9" onclick="lastPage()">上一页</div>
         <div class="btn" style="margin-left: 5%; background-color: #c3fcff" onclick="nextPage()">下一页</div>
     </div>
 </div>
@@ -238,14 +250,14 @@
     function init() {
         moveDom(document.getElementsByClassName('floatDiv')[0], ['offsetLeft', 'left', 100])
         setTimeout(function () {
-            moveDom(document.getElementsByClassName('floatDiv')[1], ['offsetLeft', 'left', 750])
-        }, 1000)
+            moveDom(document.getElementsByClassName('floatDiv')[1], ['offsetLeft', 'left', 100])
+        }, 500)
         setTimeout(function () {
             moveDom(document.getElementsByClassName('floatDiv')[2], ['offsetLeft', 'left', 100])
-        }, 2000)
+        }, 1000)
         setTimeout(function () {
             moveDom(document.getElementsByClassName('floatDiv')[3], ['offsetLeft', 'left', 950])
-        }, 3000)
+        }, 1500)
     }
 
     var page = 1
@@ -312,24 +324,22 @@
     }
 
     var text = [
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大多数类C语言语法的语言都拥有块级作用域。在一个代码块中（括在一对花括号中的一组语句）定义的所有变量在代码块的外' +
-        '部是不可见的。定义在代码块中的变量在代码块执行结束后会被释放掉。这是件好事。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;糟糕的是，尽管JavaScript的代码块语法貌似支持块级作用域，' +
-        '但实际上并不支持。js支持的是函数作用域。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let是es6中新增命令，也是用来声明变量的，let和var的区别体现在作用域上。var的作用域被规定为一个' +
-        '函数作用域，而let则被规定为块作用域，var允许在同一作用域中声明同名的变量，而let不可以。</div>',
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JavaScript没有真正的数组。这也不全是坏事。JavaScript的数组确实非常容易使用。你不必给它们设置维度，而且它们永远不' +
-        '会产生越界错误。但它们的性能相比真正的数组可能相当糟糕。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typeof null 返回\'object\'而不是\'null\'，这简直太糟糕了。typeof不能辨别出null' +
-        '与对象，更简单也更好的检测null的方式是：my_value === null<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NaN表示的不是一个数字，尽管 typeof NaN 返回的是 number 。在试图把非数字形式的' +
-        '字符串转换为数字时产生NaN，JavaScript提供了一个isNaN函数，可以辨别数字与NaN</div>',
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parseInt是一个把字符串转换为整数的函数。它在遇到非数字时会停止解析，所以parseInt("16")与parseInt("16踩踩踩")产生' +
-        '相同的结果。如果该函数会提醒我们出现了额外文本就好了，但它没有那么做。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;曾经当字符串第1个字符是0，那么该字符串会基于八进制而不是十进制来' +
-        '求值，parseInt("010") 会得到 8 的结果，不过后来更新过程中改变了。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二进制的浮点数不能正确地处理十进制的小数，因此0.1+0.2不等于0.3。这是' +
-        'JavaScript中最经常被报告的bug，并且它是遵循二进制浮点数算术标准。幸运的是，浮点数中的整数运算是精确的，所以小数表现出来的错误可以通过指定精度来避免。</div>',
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JavaScript有两组相等运算符：===和!==，以及它们邪恶的孪生兄弟==和!=。邪恶的孪生兄弟只有在两个运算数类型一致时才会' +
-        '做出正确的判断，如果两个运算数是不同的类型，它们试图去强制转换值的类型。转换的规则复杂且难以记忆。下面是一些有趣的例子<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我的建议是永远不' +
-        '要使用那对邪恶的孪生兄弟。相反，请始终使用===和!==。</div>',
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test函数的本意是想传递给每个事件处理器一个唯一值（i）。但它未能达到目的，因为事件处理器函数绑定了变量i本身，而不' +
-        '是函数在构造时的变量i的值。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;避免在循环中创建函数，它可能只会带来无谓的计算，还会引起混淆，正如上面那个糟糕的例子。我们可以先在循环之外' +
-        '创建一个辅助函数，让这个辅助函数再返回一个绑定了当前i值的函数，这样就不会导致混淆了。</div>'
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;要检索对象里包含的值，可以采用在[ ]后缀中括住一个字符串的方式。如果字符串是一个字符串字面量，而且它是一个合法的' +
+        'JavaScript标识符且不是保留字，那么也可以用.表示法代替。优先考虑使用.表示法，因为它更紧凑且可读性更好。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合法的JS标识符：1. 标识符必须以' +
+        '字母、下划线（_）或美元符（$）开始。2.后续的字符可以是字母、数字、下划线或美元符（数字是不允许作为首字符出现的，以便 JS 可以轻易区分开标识符和数字）。<br/>&nbsp;&nbsp;&nbsp;&nbsp;' +
+        '&nbsp;&nbsp;保留字：this，else，case， public，default 等</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个对象都连接到一个原型对象，并且它可以从中继承属性。所有通过对象字面量创建的对象都连接到Object.prototype。<br/>' +
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原型连接在更新时是不起作用的。当我们对某个对象做出改变时，不会触及该对象的原型。</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object 常用的方法，简单介绍两个：<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object.assign(target,source1,source2,...)' +
+        '<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该方法主要用于对象的合并，将源对象source的所有可枚举属性合并到目标对象target上,此方法只拷贝源对象的自身属性，不拷贝继承的属性。<br/><br/>&nbsp;' +
+        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object.create(proto,[propertiesObject])<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用指定的原型对象及其属性去创建一个新的对象。<br/>&nbsp;&nbsp;' +
+        '&nbsp;&nbsp;&nbsp;&nbsp;· proto : 必须。表示新建对象的原型对象<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· propertiesObject : 可选。 添加到新创建对象的可枚举属性（即其自身的属性，而' +
+        '不是原型链上的枚举属性）对象的属性描述符以及相应的属性名称</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;深拷贝和浅拷贝：<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浅拷贝是拷贝一层，深层次的对象级别的就拷贝引用；深拷贝是拷' +
+        '贝多层，每一级别的数据都会拷贝出来；<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;常用的深拷贝方式 JSON.parse(JSON.stringify(obj)) ，局限性：<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+        '1、不能复制function、正则、Symbol<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、循环引用报错<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、相同的引用会被重复复制</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;变量的解构赋值<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES6允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被' +
+        '称为解构（Destructuring）。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本质上，这种写法属于“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应的值。</div>'
     ]
 
 </script>
