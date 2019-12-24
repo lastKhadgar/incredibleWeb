@@ -34,13 +34,13 @@
             background-color: #ee3834;
             line-height: 50px;
             text-align: center;
-            color: #FFF5B9;
+            color: #e7ffcc;
         }
         .floatDiv {
             position: relative;
             border: #222222 solid 1px;
             border-radius: 5px;
-            background-color: #FFF5B9;
+            background-color: #e7ffcc;
             text-indent: 2em;
             font-size: 28px;
             padding: 30px;
@@ -72,7 +72,7 @@
             font-size: 20px;
             margin: 100px 50px 100px 200px;
             border-radius: 8px;
-            background-color: #FFF5B9;
+            background-color: #e7ffcc;
         }
         .showBox .wholeBox .box .btn {
             display: inline-block;
@@ -124,16 +124,16 @@
     <a class="nameTab" href="./introduction.html">
         <img style="width: 60px; float: left;" src="backBtn.png">
     </a>
-    二、对象
+    三、数组
 </div>
-<div class="floatDiv" style="width: 1200px; left: -1400px; top: 30px">
-    1、对象是属性的容器，其中每个属性都拥有名字和值。属性的名字可以是包括空字符串在内的任意字符串。属性值可以是除undefined值之外的任何值。
+<div class="floatDiv" style="width: 1400px; left: -1600px; top: 30px">
+    1、数组是一段线性分配的内存，它通过整数计算偏移并访问其中的元素。数组是一种性能出色的数据结构。JavaScript提供了一种拥有一些类数组（array-like）特性的对象。它把数组的下标转变成字符串，用其作为属性。它明显地比一个真正的数组慢，但它使用起来更方便。
 </div>
-<div class="floatDiv" style="width: 1400px; left: -1600px; top: 60px">
-    2、JavaScript里的对象是无类型（class-free）的。它对新属性的名字和属性的值没有限制。对象适合用于汇集和管理数据。对象可以包含其他对象，所以它们可以容易地表示成树状或图形结构。
+<div class="floatDiv" style="width: 1200px; left: -1400px; top: 60px">
+    2、在大多数语言中，一个数组的所有元素都要求是相同的类型，JavaScript允许数组包含任意混合类型的值，这是一个不合理的特性，大大降低了代码的可读性
 </div>
 <div class="floatDiv" style="width: 1000px; left: -1200px; top: 90px">
-    3、对象通过引用来传递，它们不会通过等号复制
+    3、数组自带很多方便的操作自身的方法，如：push，pop，slice，sort，filter...
 </div>
 <div class="title" style="margin-top: 160px">
     经典的例子
@@ -144,8 +144,17 @@
         <div class="box">
             <textarea class="textBox">
                 function test() {
-                    var obj = { first-name: 'hehe' }
-                    return obj.first-name
+                    var result = []
+                    var list = [ 0, 1, 2 ]
+                    list[10] = 3
+                    result.push(list.length)
+
+                    list.length = 12
+                    result.push(list)
+
+                    list.length = 2
+                    result.push(list)
+                    return JSON.stringify(result)
                 }
             </textarea>
             <div class="btn" onclick="run(this)">在线运行 →</div>
@@ -155,20 +164,21 @@
             <textarea class="textBox">
                 function test() {
                     var result = []
-                    Object.prototype.test = '111'
-                    var obj = { a: 'aa', b: 'bb' }
-                    result.push(obj.test)
+                    var list = [ 1, 2, 3 ]
+                    list.push(4)
+                    list.pop()
+                    list.unshift(5)
+                    result.push([...list])
 
-                    obj.test = '222'
-                    result.push(obj.test)
+                    list.shift()
+                    list.concat([6])
+                    result.push([...list])
 
-                    delete obj.test
-                    result.push(obj.test)
+                    list.splice(1, 2, 8, 9)
+                    list.slice(1,3)
+                    result.push([...list])
 
-                    delete obj.test
-                    result.push(obj.test)
-
-                    return result
+                    return JSON.stringify(result)
                 }
             </textarea>
             <div class="btn" onclick="run(this)">在线运行 →</div>
@@ -178,21 +188,14 @@
             <textarea class="textBox">
                 function test() {
                     var result = []
-                    var obj = { a: 'aaa' }
+                    var list = [5, 3, 12, 1, 35]
+                    list.sort()
+                    result.push([...list])
 
-                    var obj2 = Object.create(obj)
-                    result.push(obj2.a)
+                    var str = list.join('-')
+                    result.push(str)
 
-                    obj2.a = 'aaa1'
-                    result.push(obj.a)
-
-                    obj.b = 'bbb'
-                    result.push(obj2.b)
-
-                    obj.a = 'aaa2'
-                    result.push(obj2.a)
-
-                    return result
+                    return JSON.stringify(result)
                 }
             </textarea>
             <div class="btn" onclick="run(this)">在线运行 →</div>
@@ -202,48 +205,32 @@
             <textarea class="textBox">
                 function test() {
                     var result = []
-                    var obj = { a: 'aaa' }
-                    var obj2 = { a: { a: 'aaa' } }
+                    var list = [1, 3, 5, 7, 9]
 
-                    var copy1 = obj
-                    var copy2 = { ...obj }
-                    var copy3 = Object.assign({}, obj)
-                    var copy4 = JSON.parse(JSON.stringify(obj))
+                    var e = list.every(item => {return item > 5})
+                    result.push(e)
 
-                    var copy5 = obj2
-                    var copy6 = { ...obj2 }
-                    var copy7 = Object.assign({}, obj2)
-                    var copy8 = JSON.parse(JSON.stringify(obj2))
+                    var s = list.some(item => {return item > 5})
+                    result.push(s)
 
-                    obj.a = 'aaa1'
-                    obj2.a.a = 'aaa1'
-                    result = [ copy1.a, copy2.a, copy3.a, copy4.a, copy5.a.a, copy6.a.a, copy7.a.a, copy8.a.a ]
+                    var f = list.filter(item => {return item > 5})
+                    result.push(f)
 
-                    return result
+                    var f2 = list.forEach(item => {return item++})
+                    result.push(f2)
+
+                    var m = list.map(item => {return item++})
+                    result.push(m)
+
+                    return JSON.stringify(result)
                 }
-            </textarea>
-            <div class="btn" onclick="run(this)">在线运行 →</div>
-            <div class="result"></div>
-        </div>
-        <div class="box">
-            <textarea class="textBox">
-        function test() {
-            var add = function (obj) {
-                var a = obj.a || 2
-                var b = obj.b || 3
-                return a + b
-            }
-            var a = { a: 4 }
-            var result = add(a)
-            return result
-        }
             </textarea>
             <div class="btn" onclick="run(this)">在线运行 →</div>
             <div class="result"></div>
         </div>
     </div>
     <div class="boxFooter">
-        <div class="btn" style="margin-left: 45%; background-color: #FFF5B9" onclick="lastPage()">上一页</div>
+        <div class="btn" style="margin-left: 45%; background-color: #e7ffcc" onclick="lastPage()">上一页</div>
         <div class="btn" style="margin-left: 5%; background-color: #c3fcff" onclick="nextPage()">下一页</div>
     </div>
 </div>
@@ -265,7 +252,7 @@
     var page = 1
     var moving = false
     function nextPage () {
-        if (!moving && page < 5) {
+        if (!moving && page < 4) {
             page++
             moving = true
             moveDom(document.getElementsByClassName('wholeBox')[0], ['offsetLeft', 'left', -1893 * (page - 1)], function () {
@@ -326,22 +313,20 @@
     }
 
     var text = [
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;要检索对象里包含的值，可以采用在[ ]后缀中括住一个字符串的方式。如果字符串是一个字符串字面量，而且它是一个合法的' +
-        'JavaScript标识符且不是保留字，那么也可以用.表示法代替。优先考虑使用.表示法，因为它更紧凑且可读性更好。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合法的JS标识符：1. 标识符必须以' +
-        '字母、下划线（_）或美元符（$）开始。2.后续的字符可以是字母、数字、下划线或美元符（数字是不允许作为首字符出现的，以便 JS 可以轻易区分开标识符和数字）。<br/>&nbsp;&nbsp;&nbsp;&nbsp;' +
-        '&nbsp;&nbsp;保留字：this，else，case， public，default 等</div>',
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个对象都连接到一个原型对象，并且它可以从中继承属性。所有通过对象字面量创建的对象都连接到Object.prototype。<br/>' +
-        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原型连接在更新时是不起作用的。当我们对某个对象做出改变时，不会触及该对象的原型。</div>',
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object 常用的方法，简单介绍两个：<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object.assign(target,source1,source2,...)' +
-        '<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该方法主要用于对象的合并，将源对象source的所有可枚举属性合并到目标对象target上,此方法只拷贝源对象的自身属性，不拷贝继承的属性。<br/><br/>&nbsp;' +
-        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object.create(proto,[propertiesObject])<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用指定的原型对象及其属性去创建一个新的对象。<br/>&nbsp;&nbsp;' +
-        '&nbsp;&nbsp;&nbsp;&nbsp;· proto : 必须。表示新建对象的原型对象<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· propertiesObject : 可选。 添加到新创建对象的可枚举属性（即其自身的属性，而' +
-        '不是原型链上的枚举属性）对象的属性描述符以及相应的属性名称</div>',
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;深拷贝和浅拷贝：<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浅拷贝是拷贝一层，深层次的对象级别的就拷贝引用；深拷贝是拷' +
-        '贝多层，每一级别的数据都会拷贝出来；<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;常用的深拷贝方式 JSON.parse(JSON.stringify(obj)) ，局限性：<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-        '1、不能复制function、正则、Symbol<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、循环引用报错<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、相同的引用会被重复复制</div>',
-        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;变量的解构赋值<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES6允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被' +
-        '称为解构（Destructuring）。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本质上，这种写法属于“模式匹配”，只要等号两边的模式相同，左边的变量就会被赋予对应的值。</div>'
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个数组都有一个length属性。和大多数其他语言不同，JavaScript数组的length是没有上界的。如果你用大于或等于当前length' +
+        '的数字作为下标来存储一个元素，那么length值会被增大以容纳新元素，不会发生数组越界错误。 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length属性的值是这个数组的最大整数属性名加上1。它' +
+        '不一定等于数组里的属性的个数。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你可以直接设置length的值。设置更大的length不会给数组分配更多的空间。而把length设小将导致所有下标大于等于新' +
+        'length的属性被删除</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES3 新增数组处理方法：<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;push() 末尾加，pop() 末尾减，unshift() 开始加， shift() 开始减 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+        'concat() 方法用于连接两个或多个数组。 该方法不会改变现有的数组,而仅仅会返回被连接数组的一个副本<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;splice(起始下标，删除项数，插入的项) 方法可删除从 ' +
+        'index 处开始的零个或多个元素,并且用参数列表中声明的一个或多个值来替换那些被删除的元素<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slice(起始下标，结束下标) 方法可从已有的数组中返回选定的元素，' +
+        '不会改变原数组</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES3 新增数组处理方法：<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sort() 方法用于对数组的元素进行排序。Js的默认比较函数把要被' +
+        '排序的元素都视为字符串。它尚未足够智能到在比较这些元素之前先检测它们的类型，所以当它比较这些数字的时候，会把它们转化为字符串，于是得到一个错得离谱的结果。幸运的是，你可以使用自己的比较函数来' +
+        '替换默认的比较函数。<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;join()方法将一个数组(或一个类数组对象)的所有元素根据传入的参数连接成一个字符串,并返回这个字符串。</div>',
+        '<div style="margin: 30px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ES5 新增数组处理方法：<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indexOf() 从数组起始的位置开始查找，lastIndexOf() 从数组结束的位' +
+        '置开始查找<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;every() 如果每一项都满足，返回true，some() 如果有一项满足，返回true，filter() 返回满足条件的所有成员，map() 返回函数执行后的结果列表，' +
+        'forEach() 执行函数，无返回值</div>'
     ]
 
 </script>
